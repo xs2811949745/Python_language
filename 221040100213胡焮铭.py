@@ -99,7 +99,7 @@ def check_section(section,action):
 
                 # 如果当前待查字段jsonschema规则存在enum 字段
     #测 ST是否在枚举范围内
-        elif ("enum" in action.keys()):
+        if ("enum" in action.keys()):
 
             if section_v not in action["enum"]:
                 # print("chk_enum_range error ")
@@ -109,7 +109,7 @@ def check_section(section,action):
 
             # 如果当前待查字段jsonschema规则存在minLength && maxLength字段 则检查数据section_v的长度是否符合要求
     #测长度大小
-        elif ("minLength" in action.keys()) and ("maxLength" in action.keys()):
+        if ("minLength" in action.keys()) and ("maxLength" in action.keys()):
             # 取当前输入数据的长度和规则中规定的比较
             if not ((len(section_v) >= action["minLength"]) and (len(section_v) <= action["maxLength"])):
                 if(len(section_v)>action["maxLength"]):
@@ -119,7 +119,7 @@ def check_section(section,action):
                 # raise ValueError(section_k, " Length检查:", section_v, "数据长度范围错误")
             else:
                 pass
-        elif (section_k == 'CP'):
+        if (section_k == 'CP'):
                 cp_v = section.split("=")
                 try:
                     if (cp_v[1] == "&&&&"):
@@ -136,7 +136,7 @@ def check_section(section,action):
                     raise (e)
             # 如果当前待查字段jsonschema规则存在type
     # 测数据大小
-        elif ("type" in action.keys()):
+        if ("type" in action.keys()):
             # 如果当前待查字段jsonschema规则存在type 的值是 integer 则尝试转为整形
             if (action["type"] == "integer"):
                     num = int(section_v)
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
     # 使用分号切分数据段数据 ，赋值给变量 data_section
 
-    with open('packet-schema-v2.1.json', 'r') as fcc_file:
+    with open('历史作业/packet-schema-v2.1.json', 'r') as fcc_file:
         packet_schema_json = json.load(fcc_file)
 
         # {'properties': {'QN': {'type': 'string', 'format': 'date-time', 'minLength': 17, 'maxLength': 17},
@@ -196,7 +196,7 @@ if __name__ == "__main__":
         # 从命令行split分号间隔的数据到 data_section中，类型为list
 
         data_section = sys.argv[1].split(";")
-        # str="QN=32016080108585722;ST=32;CN=1062;PW=100000;MN=010000A8900016F000169DC0;Flag=5;PNO=2;CP=&&RtdInterval=30&&"
+        # str="QN=320160801085857223;ST=32;CN=1062;PW=100000;MN=010000A8900016F000169DC0;Flag=5;CP=&&RtdInterval=30&&"
         # data_section=str.split((";"))
         #  对data_section中的元素进行遍历，以便检查所有出现字段是否符合格式要求
     try:
